@@ -5,8 +5,11 @@ DOCKER_IMAGE_TAG=ubuntu-20.04
 
 PRIVILEGED=0
 
-while getopts "w:v:ph" opt; do
+while getopts "w:v:pt:h" opt; do
 	case "${opt}" in
+	t)
+		DOCKER_IMAGE_TAG=${OPTARG}
+		;;
 	w)
 		WORKDIR=$(realpath ${OPTARG})
 		VOLUMES+="--volume $(realpath ${OPTARG}):$(realpath ${OPTARG}) "
