@@ -3,7 +3,9 @@
 DOCKER_IMAGE_NAME=builder
 DOCKER_IMAGE_TAG=ubuntu-20.04
 
-while getopts "w:v:h" opt; do
+PRIVILEGED=0
+
+while getopts "w:v:ph" opt; do
 	case "${opt}" in
 	w)
 		WORKDIR=$(realpath ${OPTARG})
@@ -16,6 +18,9 @@ while getopts "w:v:h" opt; do
 			VOLUMES+="--volume $(realpath ${OPTARG}):$(realpath ${OPTARG}) "
 		fi
 		;;
+	p)
+		PRIVILEGED=1
+		;;
 	h|*)
 		echo "Usage: $0 [-w WORKDIR] [-h]"
 		[ "${opt}" = "h" ] && exit 0 || exit 1
@@ -27,6 +32,11 @@ done
 
 #[ -d "${HOME}/.rustup" ] &&
 #	VOLUMES+="--volume ${HOME}/.rustup:${HOME}/.rustup "
+
+EXTRA_OPTIONS=""
+
+[ ${PRIVILEGED} -ne 0 ] &&
+	EXTRA_OPTIONS+="--privileged "
 
 docker run \
 	--rm \
@@ -42,4 +52,5 @@ docker run \
 	--env DISPLAY=unix${DISPLAY} \
 	--workdir "${WORKDIR}" \
 	${VOLUMES} \
+	${EXTRA_OPTIONS} \
 	${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}
