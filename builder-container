@@ -46,7 +46,7 @@ docker run \
 	--env BUILDER_USER=$(id -un) \
 	--env BUILDER_GID=$(id -g) \
 	--env BUILDER_GROUP=$(id -gn) \
-	--hostname ${DOCKER_IMAGE_NAME} \
+	--hostname ${DOCKER_IMAGE_NAME}_${DOCKER_IMAGE_TAG} \
 	--mount type=bind,src="${HOME}/.gitconfig",dst="${HOME}/.gitconfig" \
 	--mount type=bind,src="/tmp/.X11-unix",dst="/tmp/.X11-unix" \
 	--env DISPLAY=unix${DISPLAY} \
