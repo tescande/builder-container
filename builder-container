@@ -1,0 +1,45 @@
+#!/bin/bash
+
+DOCKER_IMAGE_NAME=builder
+DOCKER_IMAGE_TAG=ubuntu-20.04
+
+while getopts "w:v:h" opt; do
+	case "${opt}" in
+	w)
+		WORKDIR=$(realpath ${OPTARG})
+		VOLUMES+="--volume $(realpath ${OPTARG}):$(realpath ${OPTARG}) "
+		;;
+	v)
+		if [[ "${OPTARG}" =~ ^(.*):(.*)$ ]]; then
+			VOLUMES+="--volume $(realpath ${BASH_REMATCH[1]}):${BASH_REMATCH[2]} "
+		else
+			VOLUMES+="--volume $(realpath ${OPTARG}):$(realpath ${OPTARG}) "
+		fi
+		;;
+	h|*)
+		echo "Usage: $0 [-w WORKDIR] [-h]"
+		[ "${opt}" = "h" ] && exit 0 || exit 1
+		;;
+	esac
+done
+
+: ${WORKDIR:=$(realpath .)}
+
+#[ -d "${HOME}/.rustup" ] &&
+#	VOLUMES+="--volume ${HOME}/.rustup:${HOME}/.rustup "
+
+docker run \
+	--rm \
+	--tty \
+	--interactive \
+	--env BUILDER_UID=$(id -u) \
+	--env BUILDER_USER=$(id -un) \
+	--env BUILDER_GID=$(id -g) \
+	--env BUILDER_GROUP=$(id -gn) \
+	--hostname ${DOCKER_IMAGE_NAME} \
+	--mount type=bind,src="${HOME}/.gitconfig",dst="${HOME}/.gitconfig" \
+	--mount type=bind,src="/tmp/.X11-unix",dst="/tmp/.X11-unix" \
+	--env DISPLAY=unix${DISPLAY} \
+	--workdir "${WORKDIR}" \
+	${VOLUMES} \
+	${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}
