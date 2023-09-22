@@ -1,7 +1,7 @@
 SHELL = /bin/bash
 
 IMAGE_NAME = builder
-TAG = ubuntu-20.04
+TAG ?= ubuntu-20.04
 
 DOCKERFILE = Dockerfile.${TAG}
 
