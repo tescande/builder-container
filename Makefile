@@ -1,9 +1,10 @@
 SHELL = /bin/bash
 
 IMAGE_NAME = builder
-TAG ?= ubuntu-20.04
+FROM ?= ubuntu:20.04
+TAG = $(subst :,-,$(subst .,-,${FROM}))
 
-DOCKERFILE = Dockerfile.${TAG}
+DOCKERFILE = .Dockerfile.${TAG}
 
 FILES = ${DOCKERFILE} entrypoint.sh
 
@@ -15,6 +16,9 @@ GID = $(shell id -g)
 default: image
 
 image: .image_id
+
+${DOCKERFILE}: Dockerfile.template
+	sed -r 's|@@FROM@@|${FROM}|' $< > $@
 
 .image_id: ${FILES}
 	docker build \

@@ -1,4 +1,4 @@
-FROM debian:testing
+FROM @@FROM@@
 
 #ENV TZ=Europe/Paris
 #RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
@@ -15,7 +15,8 @@ RUN apt-get update && \
                        libncurses-dev pkg-config libglib2.0-dev \
                        libpixman-1-dev libyajl-dev libsystemd-dev \
                        bison flex ocaml-findlib libnl-3-dev libnl-route-3-dev \
-                       cmake libjson-c-dev libcmocka-dev ninja-build
+                       cmake libjson-c-dev libcmocka-dev ninja-build nasm \
+                       bash-completion
 
 RUN sed -i 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
     locale-gen
