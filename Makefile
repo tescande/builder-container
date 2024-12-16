@@ -1,7 +1,7 @@
 SHELL = /bin/bash
 
 IMAGE_NAME = builder
-FROM ?= ubuntu:20.04
+FROM ?= debian:testing
 TAG = $(subst :,-,$(subst .,-,${FROM}))
 
 DOCKERFILE = .Dockerfile.${TAG}
