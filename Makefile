@@ -6,7 +6,7 @@ TAG = $(subst :,-,$(subst .,-,${FROM}))
 
 DOCKERFILE = .Dockerfile.${TAG}
 
-FILES = ${DOCKERFILE} entrypoint.sh
+FILES = ${DOCKERFILE} entrypoint.sh bash_profile
 
 USERNAME = $(shell id -un)
 UID = $(shell id -u)
