@@ -3,6 +3,7 @@ SHELL = /bin/bash
 IMAGE_NAME = builder
 FROM ?= debian:testing
 TAG = $(subst :,-,$(subst .,-,${FROM}))
+#NO_CACHE = "--no-cache"
 
 DOCKERFILE = .Dockerfile.${TAG}
 
@@ -21,7 +22,7 @@ ${DOCKERFILE}: Dockerfile.template
 	sed -r 's|@@FROM@@|${FROM}|' $< > $@
 
 .image_id: ${FILES}
-	docker build \
+	docker build ${NO_CACHE} \
 		--file ${DOCKERFILE} \
 		--tag ${IMAGE_NAME}:${TAG} \
 		.
