@@ -31,15 +31,17 @@ while getopts "w:v:pt:h" opt; do
 	esac
 done
 
+shift "$((OPTIND - 1))"
+EXTRA_OPTIONS=$@
+
 : ${WORKDIR:=$(realpath .)}
 
 #[ -d "${HOME}/.rustup" ] &&
 #	VOLUMES+="--volume ${HOME}/.rustup:${HOME}/.rustup "
 
-EXTRA_OPTIONS=""
 
 [ ${PRIVILEGED} -ne 0 ] &&
-	EXTRA_OPTIONS+="--privileged "
+	EXTRA_OPTIONS+=" --privileged "
 
 docker run \
 	--rm \
