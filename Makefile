@@ -23,6 +23,7 @@ ${DOCKERFILE}: Dockerfile.template
 
 .image_id: ${FILES}
 	docker build ${NO_CACHE} \
+		--no-cache \
 		--file ${DOCKERFILE} \
 		--tag ${IMAGE_NAME}:${TAG} \
 		.
