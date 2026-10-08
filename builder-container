@@ -25,7 +25,7 @@ while getopts "w:v:pt:h" opt; do
 		PRIVILEGED=1
 		;;
 	h|*)
-		echo "Usage: $0 [-w WORKDIR] [-h]"
+		echo "Usage: $0 [-w WORKDIR] [-t IMAGE_TAG] [-v PATH] [-p] [-h]"
 		[ "${opt}" = "h" ] && exit 0 || exit 1
 		;;
 	esac
