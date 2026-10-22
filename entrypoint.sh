@@ -24,6 +24,7 @@ if [[ -n ${BUILDER_UID} && -n ${BUILDER_USER} && -n ${BUILDER_UID} && -n ${BUILD
 		#cp_skel_file ".bashrc"
 		#cp_skel_file ".bash_aliases"
 		cp_skel_file ".bash_profile"
+		cp_skel_file ".tmux.conf"
 
 		chown ${BUILDER_UID}:${BUILDER_GID} ${HOME}
 	else
