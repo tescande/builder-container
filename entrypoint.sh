@@ -31,7 +31,7 @@ if [[ -n ${BUILDER_UID} && -n ${BUILDER_USER} && -n ${BUILDER_UID} && -n ${BUILD
 	fi
 
 	groupadd -o -g ${BUILDER_GID} ${BUILDER_GROUP}
-	useradd -o ${USERADD_OPT} -d ${HOME} -g ${BUILDER_GID} -u ${BUILDER_UID} ${BUILDER_USER} 2>/dev/null
+	useradd -o ${USERADD_OPT} -d ${HOME} -s /bin/bash -g ${BUILDER_GID} -u ${BUILDER_UID} ${BUILDER_USER} 2>/dev/null
 
 	# Enable passwordless sudo capabilities for the user
 	echo "${BUILDER_USER} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/passwordless
