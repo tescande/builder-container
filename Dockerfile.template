@@ -12,7 +12,7 @@ RUN apt-get update && \
                        gosu sudo locales vim curl wget tig \
                        build-essential git bin86 bcc lzma liblzma-dev \
                        python3 python3-dev python3-venv python3-wheel \
-                       acpica-tools uuid-dev \
+                       acpica-tools uuid-dev checkpolicy \
                        libncurses-dev pkg-config libglib2.0-dev \
                        libpixman-1-dev libyajl-dev libsystemd-dev \
                        bison flex ocaml-findlib libnl-3-dev libnl-route-3-dev \
